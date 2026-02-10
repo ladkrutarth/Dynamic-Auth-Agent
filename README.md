@@ -1,18 +1,68 @@
-# Dynamic-Auth-Agent
-Data Science Capstone Project
+# GraphGuard: Dynamic Identity Verification Agent 🛡️
 
-Team: Dynamic Agents
+**A GenAI-driven security system that replaces static security questions with dynamic, context-aware challenges based on real-time transaction graphs.**
 
-Members:
+---
 
-Prathyu Adari
-16371669
+## 👥 Team & Roles
+| Name | Role | GitHub |
+| :--- | :--- | :--- |
+| **Prathyu Adari** | **Product Intelligence, Strategy & Insight Lead ** | (https://github.com/PrathyushaRagavAdari ) |
+| *Krutarth Lad* | *Systems, Data Architecture, ML & Pipeline Lead* | *(https://github.com/ladkrutarth)* |
 
-Role: Product Intelligence, Strategy & Insight Lead
+> **Contact:** [Your Email]
 
-Krutarth Lad
+---
 
-Role: The Systems, Data Architecture, ML & Pipeline Lead
+## 🚀 Problem & Solution
+* **The Problem:** Traditional Knowledge-Based Authentication (KBA) relies on static secrets ("What is your mother's maiden name?") that are easily bought on the dark web.
+* **The Solution:** **GraphGuard** utilizes a temporal Knowledge Graph of a user's recent spending history to generate one-time, dynamic security questions (e.g., *"You visited a coffee shop in Seattle last Tuesday. Was it Starbucks or Tully's?"*) that are impossible for hackers to guess.
+
+## 🏗️ High-Level Architecture
+1.  **Data Layer:** **Snowflake** stores transaction logs (Source of Truth).
+2.  **Privacy Layer:** Python middleware hashes PII (Account IDs) using SHA-256 before inference.
+3.  **Intelligence Layer:** **LlamaIndex** builds a temporary Knowledge Graph to map relationships between Users, Merchants, and Locations.
+4.  **Agentic Core:** **Mistral-7B / GPT-4o** reasons over the graph to generate "Hard" questions and plausible "Distractor" answers (stored in **FAISS/Pinecone**).
+5.  **Audit Layer:** A separate **Multimodal RAG** agent verifies all questions against NIST 800-63B guidelines before they are shown to the user.
+
+---
+
+## 📂 Repository Structure
+
+This repository is organized into five core modules enabling reproducibility and governance.
+
+### 📄 `/proposal/`
+* `GraphGuard_Capstone_Proposal.pdf` — The approved project proposal and feasibility study.
+* `literature_review.md` — Summaries of key papers on GraphRAG and Zero-Trust Architecture.
+
+### 💾 `/data/`
+* `dataset_card.md` — Documentation for the [Kaggle Credit Card Fraud Dataset](https://www.kaggle.com/datasets/kartik2112/fraud-detection).
+* `pii_masking.py` — **Critical:** The cryptographic salt and hashing logic to anonymize user IDs.
+* `synthetic_graph_schema.json` — The ontology defining Node types (Merchant, Category) and Edges (TRANSACTED_AT).
+* *(Note: Raw transaction data is NOT stored here for security; only scripts to fetch/mock it.)*
+
+### 🧠 `/src/` (or `/notebooks/`)
+* `01_Data_Ingestion.ipynb` — Snowflake connection and graph construction pipeline.
+* `02_GraphRAG_Agent.ipynb` — The core logic for distinctiveness scoring and question generation.
+* `03_Compliance_Audit.ipynb` — The Week 3 Multimodal RAG system for NIST verification.
+* `app.py` — The **Streamlit** frontend code for the user authentication demo.
+
+### ⚖️ `/evaluation/`
+* `benchmarks/` — Results from the Ablation Study (Text-only vs. GraphRAG).
+* `metrics_report.md` — Automated scoring of Latency (1.7s avg) and Faithfulness (0.80 Precision).
+* `failure_modes.md` — Documentation of known edge cases (e.g., "Cold Start" for new users) and mitigation strategies.
+
+### 📚 `/docs/`
+* `architecture_diagram.png` — Visual flow of the GenAI stack.
+* `governance_rules.md` — The "Refusal Protocol" for non-banking queries.
+* `weekly_updates/` — Sprint logs and milestone tracking.
+
+---
+
+## 🔗 Key References
+* **Data Source:** [Kaggle - Credit Card Transactions](https://www.kaggle.com/datasets/kartik2112/fraud-detection)
+* **Regulatory Standard:** [NIST SP 800-63B (Digital Identity Guidelines)](https://pages.nist.gov/800-63-3/sp800-63b.html)
+* **Core Tech:** [LlamaIndex (GraphRAG)](https://www.llamaindex.ai/)
 
 
 # Week 3 Sprint: Multimodal Compliance RAG for GraphGuard
