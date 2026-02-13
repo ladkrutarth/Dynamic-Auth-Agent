@@ -202,3 +202,13 @@ graph TD
     LLM -->|6. Return Response| UI
     UI -->|7. Log Interaction| Logs[(product_metrics.csv)]
     UI -->|8. Update Metrics| Sidebar[Metrics Dashboard]
+
+app.py: The Streamlit code (generated in Section 6).
+
+src/pipeline.py: The RAG logic (generated in Section 3).
+
+logs/product_metrics.csv: The log file with at least 5 rows (generated in Section 4).
+
+requirements.txt: The dependencies (generated in Section 6.1).
+
+results/: Folder containing your failure risk analysis (generated in Section 8).
