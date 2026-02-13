@@ -1,0 +1,9 @@
+streamlit
+pandas
+numpy
+requests
+python-dotenv
+# Add your ML/LLM packages below (examples):
+# scikit-learn
+# torch
+# transformers
