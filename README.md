@@ -157,3 +157,48 @@ To move this from Colab to Production:
 1. **Vector DB:** Migrate from local FAISS to **Pinecone** for persistent storage.
 2. **Model:** Upgrade from Mistral-7B to **Llama-3-70B** for better reasoning on complex "gray area" compliance questions.
 3. **Interface:** Build a Streamlit dashboard where Compliance Officers can upload new policy PDFs without coding.
+
+# Week 4 Hands-On: Capstone Product Integration & Deployment Readiness
+
+
+| **Project Metadata** | **Details** |
+| :--- | :--- |
+| **Role** | Security Product Analyst |
+| **Stakeholder** | Bank Compliance Auditor / Fraud Operations |
+| **Focus** | GraphRAG, Identity Verification, Governance |
+
+---
+
+## 🚀 Project Overview
+**GraphGuard** is a Generative AI security agent designed to replace static Knowledge-Based Authentication (KBA) with **dynamic, context-aware challenges**.
+
+By leveraging **GraphRAG** (LlamaIndex + Snowflake) and **GPT-4o**, the system constructs temporary knowledge graphs from a user's recent transaction history. [cite_start]This allows it to generate "hallucination-free" verification questions (e.g., *"You visited a coffee shop in Seattle last Tuesday. Was it Starbucks or Tully's?"*) that are intuitive for the owner but impossible for attackers to guess using stolen static data[cite: 10, 41, 107].
+
+---
+
+## 🔗 Deployment
+### **Live Demo**
+- **Streamlit App:** [(https://ldpvyhhvhvmlsypvgok9at.streamlit.app/)]
+*(Note: If not yet deployed to cloud, please run locally using the instructions below)*
+
+### **Run Locally**
+1. **Clone the Repo:**
+   ```bash
+   git clone [https://github.com/PrathyushaRagavAdari/Dynamic-Auth-Agent.git](https://github.com/PrathyushaRagavAdari/Dynamic-Auth-Agent.git)
+   cd Dynamic-Auth-Agent
+
+## 🏗️ Architecture   
+
+The system follows a Retrieval-Augmented Generation (RAG) pattern with strict governance guardrails.
+
+code snippet:
+
+graph TD
+    User[Compliance Officer] -->|1. Submit Query| UI[Streamlit App]
+    UI -->|2. Hash PII| Middleware[Python Middleware]
+    Middleware -->|3. Retrieve Context| RAG[RAG Engine]
+    RAG -->|4. Fetch Chunks| DB[(NIST PDF / FAISS)]
+    RAG -->|5. Generate Verdict| LLM[GPT-4o]
+    LLM -->|6. Return Response| UI
+    UI -->|7. Log Interaction| Logs[(product_metrics.csv)]
+    UI -->|8. Update Metrics| Sidebar[Metrics Dashboard]
